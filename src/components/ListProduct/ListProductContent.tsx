@@ -8,7 +8,7 @@ interface ListProductContentProps {
 
 export const ListProductContent = ({children,CSSstyle}: ListProductContentProps) => {
     const styleCSS = {...style.container, ...CSSstyle};
-    console.log(styleCSS);
+    
     return (
         <View style={styleCSS}>
             {children}
