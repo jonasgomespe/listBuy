@@ -26,29 +26,32 @@ export const ListProductAction = () => {
     }   
     
     return (
-        <View>
-            <View style={{flexDirection:'row', justifyContent:'center', alignItems:'center'}}>
-                <Pressable
-                    onPress={onClickLess}
-                    style={style.styleButtonLess}
-                >
-                    <Text style={style.titleButton}>-</Text>
-                </Pressable>
+        <View style={style.containerProduct}>
+            <Pressable
+                onPress={onClickLess}
+                style={style.styleButtonLess}
+            >
+                <Text style={style.titleButton}>-</Text>
+            </Pressable>
 
-                    <TextInput onChangeText={handleInputChange} style={{textAlign:'center', fontSize:20, fontWeight:'bold'}} value={String(amount)} />
+                <TextInput keyboardType="decimal-pad" onChangeText={handleInputChange} style={style.registerProduct} value={String(amount)} />
 
-                <Pressable 
-                    onPress={onClickPlus}
-                    style={style.styleButtonPlus}
-                >
-                    <Text style={style.titleButton}>+</Text>
-                </Pressable>
-            </View>
+            <Pressable 
+                onPress={onClickPlus}
+                style={style.styleButtonPlus}
+            >
+                <Text style={style.titleButton}>+</Text>
+            </Pressable>
         </View>
     )
 }
 
 const style = StyleSheet.create({
+    containerProduct:{
+        flexDirection:'row', 
+        justifyContent:'center', 
+        alignItems:'center'
+    },
     styleButtonPlus:{
         backgroundColor:'#AEFF03',
         width:40,
@@ -68,5 +71,8 @@ const style = StyleSheet.create({
         color:'#fff',
         textAlign:'center',
         lineHeight:40
+    },
+    registerProduct:{
+        textAlign:'center', fontSize:20, fontWeight:'bold', color:'#A8A8A8'
     }
 })

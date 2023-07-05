@@ -8,7 +8,6 @@ import { ListProductAction } from "../../components/ListProduct/ListProductActio
 
 export const Home = () => {
 
-    
     return (
         <View>
             <StatusBar barStyle="dark-content" />
@@ -16,13 +15,13 @@ export const Home = () => {
             <MenuPrimary />
             <Input placeHolder="Pesquisar registro" cssStyle={{marginTop:-30}} />
             <ListProduct.Root>
-                <ListProduct.Content CSSstyle={{flexDirection:'row', justifyContent:'space-evenly'}}>
+                <ListProduct.Content CSSstyle={{flexDirection:'row', justifyContent:'space-evenly', alignItems:'center'}}>
                     <ListProduct.Icon size={35} icon="shopping-cart" />
                     <View>
-                        <Text style={{fontSize:15}}>
+                        <Text style={{fontSize:15, color:'#BDBDBD'}}>
                             Feijão
                         </Text>
-                        <Text style={{fontSize:25,fontWeight:'bold'}}>
+                        <Text style={{fontSize:25,fontWeight:'bold', color:'#525252'}}>
                             R$ 300,00
                         </Text>
                     </View>

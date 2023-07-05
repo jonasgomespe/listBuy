@@ -19,6 +19,8 @@ export const ListProductContent = ({children,CSSstyle}: ListProductContentProps)
 const style = StyleSheet.create({
     container: {
         justifyContent:'center',
-        alignItems:'center'
+        alignItems:'center',
+        borderBottomWidth:1,
+        borderBottomColor:"rgba(0,0,0,0.1)"
     }
 }) 
