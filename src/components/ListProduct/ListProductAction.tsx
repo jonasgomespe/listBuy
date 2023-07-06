@@ -10,7 +10,7 @@ export const ListProductAction = () => {
     const [amount, setAmount] = useState(0);
 
     function onClickPlus(){
-        setAmount(amount+1);
+        if(amount <= 9999) setAmount(amount+1);
     }  
     
     function onClickLess(){
@@ -18,11 +18,8 @@ export const ListProductAction = () => {
     }  
 
     function handleInputChange(valor:string){
-        if(Number(valor) > 0){
-            setAmount(Number(valor));
-        }else{
-            setAmount(0);
-        }
+        if(Number(valor) > 0 && Number(valor) <= 10000) setAmount(Number(valor));
+        if(valor == '') setAmount(0);
     }   
     
     return (
@@ -34,7 +31,7 @@ export const ListProductAction = () => {
                 <Text style={style.titleButton}>-</Text>
             </Pressable>
 
-                <TextInput keyboardType="decimal-pad" onChangeText={handleInputChange} style={style.registerProduct} value={String(amount)} />
+                <TextInput maxLength={10000} keyboardType="decimal-pad" onChangeText={handleInputChange} style={style.registerProduct} value={String(amount)} />
 
             <Pressable 
                 onPress={onClickPlus}
@@ -70,9 +67,14 @@ const style = StyleSheet.create({
         fontSize:35,
         color:'#fff',
         textAlign:'center',
-        lineHeight:40
+        lineHeight:40,
     },
     registerProduct:{
-        textAlign:'center', fontSize:20, fontWeight:'bold', color:'#A8A8A8'
+        textAlign:'center', 
+        fontSize:20, 
+        fontWeight:'bold', 
+        color:'#A8A8A8',
+        width:55,
+        maxWidth:70
     }
 })
