@@ -1,9 +1,5 @@
-import React, { ElementRef, useState } from "react";
+import React, { useState } from "react";
 import { TextInput, Text, View, Pressable, StyleSheet } from "react-native";
-
-// interface ListProductActionProps{
-//     value:string
-// }
 
 export const ListProductAction = () => {
 
@@ -21,7 +17,7 @@ export const ListProductAction = () => {
         if(Number(valor) > 0 && Number(valor) <= 10000) setAmount(Number(valor));
         if(valor == '') setAmount(0);
     }   
-    
+
     return (
         <View style={style.containerProduct}>
             <Pressable

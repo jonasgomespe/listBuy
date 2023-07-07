@@ -1,5 +1,5 @@
 import React, { ReactNode } from "react";
-import { View, StyleSheet, StyleProp } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 
 interface ListProductContentProps {
     children:ReactNode,

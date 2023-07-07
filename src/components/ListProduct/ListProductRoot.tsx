@@ -3,13 +3,14 @@ import { View, StyleSheet, SafeAreaView, ScrollView } from "react-native";
 
 
 interface ListProductRootProps {
-    children: ReactNode
+    children: ReactNode,
+    CSSstyle?: object
 }
 
-export const ListProductRoot = ({children}:ListProductRootProps) => {
+export const ListProductRoot = ({children, CSSstyle}:ListProductRootProps) => {
 
     return (
-        <SafeAreaView style={style.container}>
+        <SafeAreaView style={{...style.container, ...CSSstyle}}>
             <ScrollView style={style.scroll}>
                 {children}
             </ScrollView>
@@ -24,14 +25,13 @@ const style = StyleSheet.create({
         borderRadius:25,
         backgroundColor:'#fff',
         padding:15,
-        marginTop:39,
         margin:20,
         height:'60%',
-        shadowColor: 'rgba(0,0,0,0.6)',
-        shadowOffset: { width: 0, height: 10 },
+        shadowColor: 'rgba(0,0,0,0.1)',
+        shadowOffset: { width: 0, height: 0 },
         shadowOpacity: 10,
         shadowRadius: 4,
-        elevation: 10, // 
+        elevation: 5, // 
     },
     scroll:{
         width:'100%'
