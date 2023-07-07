@@ -9,15 +9,21 @@ import { Result } from "../../components/Result";
 import { Flex } from "../../components/Flex";
 import { Box } from "../../components/Box";
 import { TextInputMask } from 'react-native-masked-text';
-
+import { useListProduct } from "../../hooks/ListProduct.tsx";
+import { AddItem } from "../../components/AddItem";
 
 export const Home = () => {
 
     const [price, setPrice] = useState<number | undefined>(0);
+    const [addProduct, setAddProduct] = useListProduct([]);
 
     function onPriceProduct(value:any){
         const valueInput = value || 0;
         setPrice(valueInput);
+    }
+
+    function addProductList(){
+        setAddProduct({valor: price})
     }
 
     return (
@@ -51,11 +57,11 @@ export const Home = () => {
                             />
                         </View>
                     </View>
-                    <ListProductAction />
+                    <ListProductAction onIntertPlus={addProductList} />
                 </ListProduct.Content>
             </ListProduct.Root>
 
-            <Flex CSSstyle={{width:'100%',marginLeft:15, marginTop:-10, justifyContent:'flex-start'}}>
+            <Flex CSSstyle={{width:'100%',marginLeft:15, marginTop:-10, justifyContent:'flex-start', alignItems:'center'}}>
                 <Box CSSstyle={{padding:10}}>
                     <Result 
                         CSSstyle={style.resultStyle} 
@@ -73,6 +79,7 @@ export const Home = () => {
                     />
                 </Box>
                 <Box>
+                    <AddItem />
                 </Box>
             </Flex>
         </View>

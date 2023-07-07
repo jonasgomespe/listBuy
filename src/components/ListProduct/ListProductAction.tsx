@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import { TextInput, Text, View, Pressable, StyleSheet } from "react-native";
 
-export const ListProductAction = () => {
+interface ListProductActionProps{
+    onIntertPlus: (valor:any) => void
+}
+
+export const ListProductAction = ({onIntertPlus}:ListProductActionProps) => {
 
     const [amount, setAmount] = useState(0);
 
