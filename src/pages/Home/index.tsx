@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, StatusBar } from 'react-native';
-import Header from "../../components/Header";
+import { View, Text, StatusBar } from 'react-native';
+import { Header } from "../../components/Header";
 import { Input } from "../../components/Inputs";
 import { MenuPrimary } from "../../components/Menu/MenuPrimary";
 import { ListProduct } from "../../components/ListProduct/"; 
@@ -11,19 +11,26 @@ import { Box } from "../../components/Box";
 import { TextInputMask } from 'react-native-masked-text';
 import { useListProduct } from "../../hooks/ListProduct.tsx";
 import { AddItem } from "../../components/AddItem";
+import { ModalAlert } from "../../components/Modal";
+import { style } from './style/style';
 
 export const Home = () => {
 
     const [price, setPrice] = useState<number | undefined>(0);
     const [addProduct, setAddProduct] = useListProduct([]);
+    const [showModalAddProduct, setShowModalAddProduct] = useState(false);
 
     function onPriceProduct(value:any){
         const valueInput = value || 0;
         setPrice(valueInput);
     }
 
-    function addProductList(){
-        setAddProduct({valor: price})
+    function addProductCart() {
+        setShowModalAddProduct(!showModalAddProduct);
+        //setAddProduct({title: 'Produto Teste', value: price, amount: 3});
+    }
+
+    function returnAmount(amountValue:string){
     }
 
     return (
@@ -35,38 +42,38 @@ export const Home = () => {
             <ListProduct.Root CSSstyle={{marginTop:20}}>
                 <ListProduct.Content CSSstyle={{flexDirection:'row', justifyContent:'space-evenly', alignItems:'center'}}>
                     <ListProduct.Icon size={35} icon="shopping-cart" />
-                    <View>
                         <View>
-                            <Text style={{fontSize:15, color:'#BDBDBD'}}>
-                                Feijão
-                            </Text>
+                            <View>
+                                <Text style={{fontSize:15, color:'#BDBDBD'}}>
+                                    Feijão
+                                </Text>
+                            </View>
+                            <View>    
+                                <TextInputMask
+                                    type={'money'}
+                                    options={{
+                                        precision: 2,
+                                        separator: ',',
+                                        delimiter: '.',
+                                        unit: 'R$',
+                                        suffixUnit: '',
+                                    }}
+                                    value={String(price)}
+                                    onChangeText={onPriceProduct}
+                                    style={{fontSize:23, fontWeight:'bold', maxWidth:120, width:120}}
+                                />
+                            </View>
                         </View>
-                        <View>    
-                            <TextInputMask
-                                type={'money'}
-                                options={{
-                                    precision: 2,
-                                    separator: ',',
-                                    delimiter: '.',
-                                    unit: 'R$',
-                                    suffixUnit: '',
-                                }}
-                                value={String(price)}
-                                onChangeText={onPriceProduct}
-                                style={{fontSize:23, fontWeight:'bold', maxWidth:120, width:120}}
-                            />
-                        </View>
-                    </View>
-                    <ListProductAction onIntertPlus={addProductList} />
+                    <ListProductAction onInputChange={returnAmount} />
                 </ListProduct.Content>
             </ListProduct.Root>
 
-            <Flex CSSstyle={{width:'100%',marginLeft:15, marginTop:-10, justifyContent:'flex-start', alignItems:'center'}}>
+            <Flex CSSstyle={{width:'100%', marginTop:-10, justifyContent:'center', alignItems:'center'}}>
                 <Box CSSstyle={{padding:10}}>
                     <Result 
                         CSSstyle={style.resultStyle} 
                         titleSize={15} 
-                        fontSizeResult={22} 
+                        fontSizeResult={20} 
                         titleColorResult="#A8F600"
                     />
                 </Box>
@@ -74,25 +81,22 @@ export const Home = () => {
                     <Result 
                         CSSstyle={style.resultStyle} 
                         titleSize={15} 
-                        fontSizeResult={22} 
+                        fontSizeResult={20} 
                         titleColorResult="#FF8B03"
                     />
                 </Box>
                 <Box>
-                    <AddItem />
+                    <AddItem onEventClick={addProductCart} />
                 </Box>
             </Flex>
+
+            <ModalAlert showModal={showModalAddProduct}>
+                <View>
+                    <Text>
+                        Teste do modal para adicionar produtos            
+                    </Text>            
+                </View>
+            </ModalAlert>
         </View>
     )
 }
-
-const style = StyleSheet.create({
-    resultStyle:{
-        borderRadius:5, 
-        width:150, 
-        backgroundColor:'#fff', 
-        padding:5, 
-        paddingLeft:10,
-        fontSize:25
-    },
-})

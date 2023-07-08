@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
-import { View, StyleSheet, StyleProp, ViewStyle} from "react-native";
+import { View } from "react-native";
+import { style } from "./style";
 
 interface FlexProps{
     children: ReactNode,
@@ -14,9 +15,3 @@ export const Flex = ({ children, CSSstyle }: FlexProps) => {
         </View>
     )
 }
-
-const style = StyleSheet.create({
-    container:{
-        flexDirection:'row'
-    }
-})
