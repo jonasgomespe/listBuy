@@ -1,6 +1,6 @@
 import React from "react";
 import { Text, Pressable } from 'react-native';
-import { style } from './style';
+import { style } from './Style/style';
 
 interface AddItemProps {
     onEventClick?: () => void
