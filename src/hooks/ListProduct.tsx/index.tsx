@@ -4,7 +4,6 @@ export const useListProduct = (valueInitial:any) => {
     const [listProduct, setListProduct] = useState(valueInitial);
     
     useEffect(()=>{
-        console.log(listProduct);
     },[listProduct])
 
     const setInsertValue = (newValue:any) => {

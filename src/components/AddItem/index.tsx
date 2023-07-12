@@ -1,11 +1,17 @@
-import React, { useState } from "react";
-import { Text, Pressable, StyleSheet } from 'react-native';
+import React from "react";
+import { Text, Pressable } from 'react-native';
+import { style } from './Style/style';
 
-export const AddItem = () => {
+interface AddItemProps {
+    onEventClick?: () => void
+}
+
+export const AddItem = ({ onEventClick }:AddItemProps) => {
 
     return (
         <Pressable 
             style={style.button}
+            onPress={onEventClick}
         >
             <Text style={style.titleButton}>
                 +
@@ -13,22 +19,3 @@ export const AddItem = () => {
         </Pressable>
     )
 }
-
-const style = StyleSheet.create({
-    button:{
-        backgroundColor:'#fff',
-        borderRadius:50,
-        shadowColor:'rgba(0,0,0,0.4)',
-        shadowRadius:10,
-        elevation:10,
-        width:60,
-        height:60,
-    },
-    titleButton:{
-        fontSize:55,
-        color:'#AEFF03',
-        textAlign:'center',
-        lineHeight:63,
-        fontWeight:'bold'
-    }
-})

@@ -24,7 +24,7 @@ export const Result = ({CSSstyle, titleSize, fontSizeResult, titleColorResult}: 
 
 const style = StyleSheet.create({
     result: {
-        fontSize:20,
+        fontSize:15,
         fontWeight:'bold'
     }
 })

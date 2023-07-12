@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { TextInput, Text, View, Pressable, StyleSheet } from "react-native";
 
 interface ListProductActionProps{
-    onIntertPlus: (valor:any) => void
+    onInputChange?: () => void
 }
 
-export const ListProductAction = ({onIntertPlus}:ListProductActionProps) => {
+export const ListProductAction = ({onInputChange}:ListProductActionProps) => {
 
     const [amount, setAmount] = useState(0);
 
@@ -17,7 +17,7 @@ export const ListProductAction = ({onIntertPlus}:ListProductActionProps) => {
         if(amount > 0) setAmount(amount-1);
     }  
 
-    function handleInputChange(valor:string){
+    function onInputChanges(valor:string){
         if(Number(valor) > 0 && Number(valor) <= 10000) setAmount(Number(valor));
         if(valor == '') setAmount(0);
     }   
@@ -31,7 +31,13 @@ export const ListProductAction = ({onIntertPlus}:ListProductActionProps) => {
                 <Text style={style.titleButton}>-</Text>
             </Pressable>
 
-                <TextInput maxLength={10000} keyboardType="decimal-pad" onChangeText={handleInputChange} style={style.registerProduct} value={String(amount)} />
+                <TextInput 
+                    maxLength={10000} 
+                    keyboardType="decimal-pad" 
+                    onChangeText={onInputChanges} 
+                    style={style.registerProduct} 
+                    value={String(amount)} 
+                />
 
             <Pressable 
                 onPress={onClickPlus}
