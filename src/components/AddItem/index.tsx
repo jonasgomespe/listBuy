@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import { Text, Pressable } from 'react-native';
 import { style } from './style';
 
-interface AddItemProps{
+interface AddItemProps {
     onEventClick?: () => void
 }
 
-export const AddItem = ({ onEventClick }: AddItemProps) => {
+export const AddItem = ({ onEventClick }:AddItemProps) => {
 
     return (
         <Pressable 

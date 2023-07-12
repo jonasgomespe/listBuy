@@ -1,13 +1,14 @@
-import React from 'react';
-import { View, TextInput, Text, StyleSheet } from 'react-native';
-import { InputIcon } from './InputIcon';
+import React, { ElementType, ReactNode } from 'react';
+import { View, TextInput, Text, StyleSheet, KeyboardTypeOptions } from 'react-native';
 
  interface PropsInput {
     cssStyle?: object,
-    placeHolder?: string
+    placeHolder?: string,
+    icon?:ReactNode,
+    type?:KeyboardTypeOptions
 }
 
-export const Input = ({cssStyle, placeHolder}: PropsInput) => {
+export const Input = ({type = 'default', cssStyle, placeHolder, icon}: PropsInput) => {
     const CssStyle = {...style.input,...cssStyle};
     return (
         <View style={style.container}>
@@ -15,8 +16,9 @@ export const Input = ({cssStyle, placeHolder}: PropsInput) => {
                 style={CssStyle}
                 placeholder={placeHolder}
                 placeholderTextColor="#ccc"
+                keyboardType={type}
             />
-            <InputIcon nameIcon='search' />
+            {icon}
         </View>
     )
 }

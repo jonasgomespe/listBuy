@@ -8,5 +8,5 @@ export const style = StyleSheet.create({
         padding:5, 
         paddingLeft:10,
         fontSize:25
-    },
+    }
 })

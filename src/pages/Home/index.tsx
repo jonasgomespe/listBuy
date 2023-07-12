@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { View, Text, StatusBar } from 'react-native';
+import React, { useState, useContext, useEffect } from "react";
+import { View, Text, StatusBar, Pressable } from 'react-native';
 import { Header } from "../../components/Header";
 import { Input } from "../../components/Inputs";
 import { MenuPrimary } from "../../components/Menu/MenuPrimary";
@@ -13,12 +13,15 @@ import { useListProduct } from "../../hooks/ListProduct.tsx";
 import { AddItem } from "../../components/AddItem";
 import { ModalAlert } from "../../components/Modal";
 import { style } from './style/style';
+import { FormListBuy } from "../../components/Form/FormListBuy";
+import { InputIcon } from "../../components/Inputs/InputIcon";
+import { AddProductListContext } from "../../context/listProduct";
 
 export const Home = () => {
 
     const [price, setPrice] = useState<number | undefined>(0);
-    const [addProduct, setAddProduct] = useListProduct([]);
     const [showModalAddProduct, setShowModalAddProduct] = useState(false);
+    const {addProductList, setAddProductList} = useContext(AddProductListContext);
 
     function onPriceProduct(value:any){
         const valueInput = value || 0;
@@ -26,11 +29,7 @@ export const Home = () => {
     }
 
     function addProductCart() {
-        setShowModalAddProduct(!showModalAddProduct);
-        //setAddProduct({title: 'Produto Teste', value: price, amount: 3});
-    }
-
-    function returnAmount(amountValue:string){
+        setAddProductList(!addProductList);
     }
 
     return (
@@ -38,7 +37,9 @@ export const Home = () => {
             <StatusBar barStyle="dark-content" />
             <Header />
             <MenuPrimary />
-            <Input placeHolder="Pesquisar registro" cssStyle={{marginTop:-50}} />
+            <Input placeHolder="Pesquisar registro" icon={
+                <InputIcon nameIcon='search' />
+            } cssStyle={{marginTop:-50}} />
             <ListProduct.Root CSSstyle={{marginTop:20}}>
                 <ListProduct.Content CSSstyle={{flexDirection:'row', justifyContent:'space-evenly', alignItems:'center'}}>
                     <ListProduct.Icon size={35} icon="shopping-cart" />
@@ -64,7 +65,7 @@ export const Home = () => {
                                 />
                             </View>
                         </View>
-                    <ListProductAction onInputChange={returnAmount} />
+                    <ListProductAction />
                 </ListProduct.Content>
             </ListProduct.Root>
 
@@ -90,13 +91,8 @@ export const Home = () => {
                 </Box>
             </Flex>
 
-            <ModalAlert showModal={showModalAddProduct}>
-                <View>
-                    <Text>
-                        Teste do modal para adicionar produtos            
-                    </Text>            
-                </View>
-            </ModalAlert>
+            <FormListBuy />
+            
         </View>
     )
 }
