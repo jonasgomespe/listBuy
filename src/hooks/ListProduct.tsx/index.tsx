@@ -1,14 +1,10 @@
-import {useState, useEffect} from "react";
+import { useContext } from "react";
+import { AddProductListContext } from "../../context/addProductList";
 
-export const useListProduct = (valueInitial:any) => {
-    const [listProduct, setListProduct] = useState(valueInitial);
-    
-    useEffect(()=>{
-    },[listProduct])
+const useListProduct = () => {
+    const { addProduct, setAddProduct } = useContext(AddProductListContext);
 
-    const setInsertValue = (newValue:any) => {
-        setListProduct([...listProduct, newValue]);
-    }
-
-    return [listProduct, setInsertValue];
+    return {addProduct, setAddProduct};
 }
+
+export default useListProduct;

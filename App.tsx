@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 import { Home } from './src/pages/Home';
-import { AddProductProvider } from './src/context/listProduct';
+import { AddProductProvider } from './src/context/addProductList';
 
 export default function App() {
   return (

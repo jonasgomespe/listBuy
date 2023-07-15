@@ -1,13 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { TextInput, Text, View, Pressable, StyleSheet } from "react-native";
 
 interface ListProductActionProps{
     onInputChange?: () => void
+    amountProduct?:string
 }
 
-export const ListProductAction = ({onInputChange}:ListProductActionProps) => {
+export const ListProductAction = ({onInputChange, amountProduct}:ListProductActionProps) => {
 
     const [amount, setAmount] = useState(0);
+
+    useEffect(() => {
+        if(amountProduct){
+            setAmount(Number(amountProduct));
+        }
+    },[amountProduct])
 
     function onClickPlus(){
         if(amount <= 9999) setAmount(amount+1);
