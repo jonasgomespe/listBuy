@@ -1,49 +1,70 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { View, Text } from 'react-native';
 import { Box } from '../../Box';
 import { style } from './Style/index';
-import { Input } from './../../Inputs/index';
+import { Input, InputMask } from './../../Inputs/index';
 import { Button } from '../../Button';
 import { ModalAlert } from '../../Modal';
-import { AddProductListContext } from '../../../context/listProduct';
+import { AddProductListContext } from '../../../context/addProductList';
 import { Flex } from '../../Flex';
+import useListProduct from '../../../hooks/ListProduct.tsx';
 
 export const FormListBuy = () => {
-    const { addProductList, setAddProductList } = useContext(AddProductListContext);
+
+    const {addProduct, setAddProduct} = useListProduct();
+    const { showModalProductList, setShowModalProductList } = useContext(AddProductListContext);
+
+    const [nameProduct, setNameProduct] = useState('');  
+    const [priceProduct, setPriceProduct] = useState('0');
+    const [amount, setAmount] = useState('');
+
 
     function onEventClosed() {
-        setAddProductList(!addProductList);
+        setShowModalProductList(!showModalProductList);
+    }
+
+    function addProductList(){
+        setAddProduct([...addProduct, {
+            name:nameProduct, 
+            princeProduct:priceProduct, 
+            amount:amount
+        }]);
     }
 
     return (
-            <ModalAlert showModal={addProductList}>
+            <ModalAlert showModal={showModalProductList}>
                 <View style={style.container}>
                     <View style={style.containerForm}>
-                            <Box>
-                                <Text style={style.title}>
-                                    Adicionar Produto
-                                </Text>
-                            </Box>
+                        <Box>
+                            <Text style={style.title}>
+                                Adicionar Produto
+                            </Text>
+                        </Box>
 
-                            <Box>
-                                <Input cssStyle={style.inputStyle} placeHolder='Titulo do produto' />
-                            </Box>
+                        <Box>
+                            <Input cssStyle={style.inputStyle} onEventChange={setNameProduct} value={nameProduct} placeHolder='Titulo do produto' />
+                        </Box>
 
-                            <Box>
-                                <Input cssStyle={style.inputStyle} placeHolder='Preço do produto' />
-                            </Box>
+                        <Box>
+                            <InputMask
+                                cssStyle={style.inputStyle}
+                                onEventChange={setPriceProduct} 
+                                value={priceProduct}
+                            />
+                            {/* <Input cssStyle={style.inputStyle} type='decimal-pad'  placeHolder='Preço do produto' /> */}
+                        </Box>
 
+                        <Box>
+                            <Input cssStyle={style.inputStyle} onEventChange={setAmount} value={amount} type={'numeric'} placeHolder='Quantidade do produto' />
+                        </Box>
+                        <Flex>
                             <Box>
-                                <Input cssStyle={style.inputStyle} type={'numeric'} placeHolder='Quantidade do produto' />
+                                <Button typeButton='cancel' CSSstyle={{width:150, margin:15}} onEventClick={onEventClosed} title="Cancelar" />
                             </Box>
-                            <Flex>
-                                <Box>
-                                    <Button typeButton='cancel' CSSstyle={{width:150, margin:15}} onEventClick={onEventClosed} title="Cancelar" />
-                                </Box>
-                                <Box>
-                                    <Button typeButton='add' CSSstyle={{width:150, margin:15}} title='Adicionar' />
-                                </Box>
-                            </Flex>
+                            <Box>
+                                <Button typeButton='add' onEventClick={addProductList} CSSstyle={{width:150, margin:15}} title='Adicionar' />
+                            </Box>
+                        </Flex>
                     </View>
                 </View>
             </ModalAlert>
