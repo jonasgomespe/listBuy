@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import { View, Text } from 'react-native';
 import { Box } from '../../Box';
 import { style } from './Style/index';
@@ -8,16 +8,17 @@ import { ModalAlert } from '../../Modal';
 import { AddProductListContext } from '../../../context/addProductList';
 import { Flex } from '../../Flex';
 import useListProduct from '../../../hooks/ListProduct.tsx';
+import { AlertModal } from '../../AlertModal';
 
 export const FormListBuy = () => {
 
-    const {addProduct, setAddProduct} = useListProduct();
+    const { addProduct, setAddProduct } = useListProduct();
     const { showModalProductList, setShowModalProductList } = useContext(AddProductListContext);
 
     const [nameProduct, setNameProduct] = useState('');  
     const [priceProduct, setPriceProduct] = useState('0');
     const [amount, setAmount] = useState('');
-
+    const [showAlertModa, setShowAlertModa] = useState(false);
 
     function onEventClosed() {
         setShowModalProductList(!showModalProductList);
@@ -29,9 +30,22 @@ export const FormListBuy = () => {
             princeProduct:priceProduct, 
             amount:amount
         }]);
+        showAlertModal();
+        clearInputs();
+    }
+
+    function clearInputs() {
+        setNameProduct('');
+        setPriceProduct('0');
+        setAmount('');
+    }
+
+    function showAlertModal() {
+        setShowAlertModa(!showAlertModa);
     }
 
     return (
+        <>
             <ModalAlert showModal={showModalProductList}>
                 <View style={style.container}>
                     <View style={style.containerForm}>
@@ -51,7 +65,6 @@ export const FormListBuy = () => {
                                 onEventChange={setPriceProduct} 
                                 value={priceProduct}
                             />
-                            {/* <Input cssStyle={style.inputStyle} type='decimal-pad'  placeHolder='Preço do produto' /> */}
                         </Box>
 
                         <Box>
@@ -68,5 +81,13 @@ export const FormListBuy = () => {
                     </View>
                 </View>
             </ModalAlert>
+
+            <AlertModal 
+                typeModal='check'
+                description='Produto adicionado!'
+                showAlert={showAlertModa}
+                onEventPress={showAlertModal}
+            />
+        </>
     )
 }

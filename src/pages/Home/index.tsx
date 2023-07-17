@@ -14,6 +14,7 @@ import { style } from './style/style';
 import { FormListBuy } from "../../components/Form/FormListBuy";
 import { InputIcon } from "../../components/Inputs/InputIcon";
 import { AddProductListContext } from "../../context/addProductList";
+import { ListProductIcon } from "../../components/ListProduct/ListProductIcon";
 
 export const Home = () => {
 
@@ -43,36 +44,50 @@ export const Home = () => {
             } cssStyle={{marginTop:-50}} />
             <ListProduct.Root CSSstyle={{marginTop:20}}>
                 {
-                    addProduct.map(response => {
-                        return (
-                            <ListProduct.Content key={response.name} CSSstyle={{flexDirection:'row', justifyContent:'space-evenly', alignItems:'center'}}>
-                                <ListProduct.Icon size={35} icon="shopping-cart" />
-                                    <View>
+                    addProduct.length > 0 ?
+                        addProduct.map(response => {
+                            return (
+                                <ListProduct.Content key={response.name} CSSstyle={{flexDirection:'row', justifyContent:'space-evenly', alignItems:'center'}}>
+                                    <ListProduct.Icon size={35} icon="shopping-cart" />
                                         <View>
-                                            <Text style={{fontSize:15, color:'#BDBDBD'}}>
-                                                {response.name}
-                                            </Text>
+                                            <View>
+                                                <Text style={{fontSize:15, color:'#BDBDBD'}}>
+                                                    {response.name}
+                                                </Text>
+                                            </View>
+                                            <View>    
+                                                <TextInputMask
+                                                    type={'money'}
+                                                    options={{
+                                                        precision: 2,
+                                                        separator: ',',
+                                                        delimiter: '.',
+                                                        unit: 'R$',
+                                                        suffixUnit: '',
+                                                    }}
+                                                    value={response.princeProduct}
+                                                    onChangeText={onPriceProduct}
+                                                    style={{fontSize:23, fontWeight:'bold', maxWidth:120, width:120}}
+                                                />
+                                            </View>
                                         </View>
-                                        <View>    
-                                            <TextInputMask
-                                                type={'money'}
-                                                options={{
-                                                    precision: 2,
-                                                    separator: ',',
-                                                    delimiter: '.',
-                                                    unit: 'R$',
-                                                    suffixUnit: '',
-                                                }}
-                                                value={response.princeProduct}
-                                                onChangeText={onPriceProduct}
-                                                style={{fontSize:23, fontWeight:'bold', maxWidth:120, width:120}}
-                                            />
-                                        </View>
-                                    </View>
-                                <ListProductAction amountProduct={response.amount} />
-                            </ListProduct.Content>
-                        )
-                    })
+                                    <ListProductAction amountProduct={response.amount} />
+                                </ListProduct.Content>
+                            )
+                        })
+                    :
+                        <Flex CSSstyle={{ width:'100%', marginTop:'25%', alignItems:'center', justifyContent:'center'}}>
+                            <Box>
+                                <Box>
+                                    <Text style={{marginBottom:-30, color:'#E7E7E7', textAlign:'center', fontSize:30, fontWeight:'bold'}}>
+                                        Nenhum registro
+                                    </Text>
+                                </Box>
+                                <Box>
+                                    <ListProductIcon icon='list' color="#E7E7E7" size={250} />
+                                </Box>
+                            </Box>
+                        </Flex>
                 }
             </ListProduct.Root>
 

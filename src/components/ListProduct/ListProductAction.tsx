@@ -3,10 +3,11 @@ import { TextInput, Text, View, Pressable, StyleSheet } from "react-native";
 
 interface ListProductActionProps{
     onInputChange?: () => void
-    amountProduct?:string
+    amountProduct?:string,
+    onEventDeleteProduct?: () => void
 }
 
-export const ListProductAction = ({onInputChange, amountProduct}:ListProductActionProps) => {
+export const ListProductAction = ({onInputChange, onEventDeleteProduct, amountProduct}:ListProductActionProps) => {
 
     const [amount, setAmount] = useState(0);
 
@@ -21,7 +22,14 @@ export const ListProductAction = ({onInputChange, amountProduct}:ListProductActi
     }  
     
     function onClickLess(){
-        if(amount > 0) setAmount(amount-1);
+        if(amount > 0){
+            setAmount(amount-1);
+        }else{
+            if(onEventDeleteProduct){
+                setAmount(0);
+                onEventDeleteProduct();
+            }
+        }
     }  
 
     function onInputChanges(valor:string){

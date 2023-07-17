@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Pressable, StyleProp } from 'react-native';
+import { Text, Pressable } from 'react-native';
 import { style } from './Style/index';
 
 interface ButtonProps {
@@ -16,10 +16,10 @@ export const Button = ({title, onEventClick, CSSstyle, typeButton = 'add'}:Butto
 
     useEffect(() => {
         if(typeButtonForm == 'add')
-            setButtonType('#FF8B03');
-
-        if(typeButtonForm == 'cancel')
             setButtonType('#82BF00');
+        
+        if(typeButtonForm == 'cancel')
+            setButtonType('#FF8B03');
     },[])
 
     return (
