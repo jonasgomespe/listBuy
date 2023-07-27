@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { View, Text, StatusBar } from 'react-native';
 import { Header } from "../../components/Header";
 import { Input } from "../../components/Inputs";
@@ -15,6 +15,7 @@ import { FormListBuy } from "../../components/Form/FormListBuy";
 import { InputIcon } from "../../components/Inputs/InputIcon";
 import { AddProductListContext } from "../../context/addProductList";
 import { ListProductIcon } from "../../components/ListProduct/ListProductIcon";
+import { RegistProduct } from "../../components/RegistProduct";
 
 export const Home = () => {
 
@@ -34,6 +35,10 @@ export const Home = () => {
         setShowModalProductList(!showModalProductList);
     }
 
+    useEffect(() => {
+        console.log(addProduct);
+    },[addProduct])
+
     return (
         <View>
             <StatusBar barStyle="dark-content" />
@@ -47,32 +52,10 @@ export const Home = () => {
                     addProduct.length > 0 ?
                         addProduct.map(response => {
                             return (
-                                <ListProduct.Content key={response.name} CSSstyle={{flexDirection:'row', justifyContent:'space-evenly', alignItems:'center'}}>
-                                    <ListProduct.Icon size={35} icon="shopping-cart" />
-                                        <View>
-                                            <View>
-                                                <Text style={{fontSize:15, color:'#BDBDBD'}}>
-                                                    {response.name}
-                                                </Text>
-                                            </View>
-                                            <View>    
-                                                <TextInputMask
-                                                    type={'money'}
-                                                    options={{
-                                                        precision: 2,
-                                                        separator: ',',
-                                                        delimiter: '.',
-                                                        unit: 'R$',
-                                                        suffixUnit: '',
-                                                    }}
-                                                    value={response.princeProduct}
-                                                    onChangeText={onPriceProduct}
-                                                    style={{fontSize:23, fontWeight:'bold', maxWidth:120, width:120}}
-                                                />
-                                            </View>
-                                        </View>
-                                    <ListProductAction amountProduct={response.amount} />
-                                </ListProduct.Content>
+                                <RegistProduct 
+                                    title={response.name} 
+                                    amount={response.amount}
+                                />
                             )
                         })
                     :

@@ -1,5 +1,5 @@
 export interface LisProduct {
-    name?: string
+    name: string,
     princeProduct?: string
-    amount?: string
+    amount: string
 } 
