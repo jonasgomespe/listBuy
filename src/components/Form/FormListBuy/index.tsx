@@ -25,11 +25,16 @@ export const FormListBuy = () => {
     }
 
     function addProductList(){
+
+        const idProduct = validationId(addProduct.length);
+
         setAddProduct([...addProduct, {
+            id:idProduct ? addProduct.length + 1 : addProduct.length,
             name:nameProduct, 
             princeProduct:priceProduct, 
             amount:amount
         }]);
+        
         showAlertModal();
         clearInputs();
     }
@@ -42,6 +47,14 @@ export const FormListBuy = () => {
 
     function showAlertModal() {
         setShowAlertModa(!showAlertModa);
+    }
+
+    function validationId(id:number) {
+        const idVerify = addProduct.find(response => {
+            return response.id == id ? true : false;
+        })
+
+        return idVerify;
     }
 
     return (

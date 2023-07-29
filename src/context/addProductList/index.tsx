@@ -6,13 +6,15 @@ interface AddProductListProps {
     showModalProductList:boolean
     addProduct: LisProduct[]
     setAddProduct: (value:LisProduct[]) => void
+    clearData: () => void
 }
 
 const AddProductListContext = createContext<AddProductListProps>({
     showModalProductList: false,
     setShowModalProductList: () => {},
     addProduct:[],
-    setAddProduct: () => {}
+    setAddProduct: () => {},
+    clearData: () => {}
 });
 
 const AddProductProvider = ({ children }: {children: ReactNode}) => {
@@ -20,8 +22,20 @@ const AddProductProvider = ({ children }: {children: ReactNode}) => {
     const [showModalProductList, setShowModalProductList] = useState(false);
     const [addProduct, setAddProduct] = useState<LisProduct[]>([]);
 
+    function clearData(){
+        setAddProduct([]);
+    }
+
     return (
-        <AddProductListContext.Provider value={{showModalProductList, setShowModalProductList, addProduct, setAddProduct}}>
+        <AddProductListContext.Provider value={
+            {
+                showModalProductList, 
+                setShowModalProductList, 
+                addProduct, 
+                setAddProduct,
+                clearData
+            }
+        }>
             {children}
         </AddProductListContext.Provider>
     )

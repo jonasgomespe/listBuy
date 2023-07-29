@@ -1,16 +1,32 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { View, Text } from "react-native";
 import { TextInputMask } from "react-native-masked-text";
 import { ListProduct } from "../ListProduct";
+import useListProduct from "../../hooks/ListProduct.tsx";
 
 interface RegistProductProps {
-    title: string,
+    id:number
+    title: string
     amount: string
+    price: string
 }
 
-export const RegistProduct = ({title = '', amount}:RegistProductProps) => {
+export const RegistProduct = ({id , price, title = '', amount}:RegistProductProps) => {
 
     const [priceProduct, onPriceProduct] = useState('0');
+    const { setDeleteProduct }  = useListProduct();
+
+    useEffect(() => {
+        onPriceProduct(price);
+    },[price]);
+
+    function onEventDeleteProduct(){
+        setDeleteProduct(id);
+    }
+
+    function amountProductList(value:string){
+        
+    }
 
     return (
             <ListProduct.Content CSSstyle={{flexDirection:'row', justifyContent:'space-evenly', alignItems:'center'}}>
@@ -37,7 +53,12 @@ export const RegistProduct = ({title = '', amount}:RegistProductProps) => {
                             />
                         </View>
                     </View>
-                <ListProduct.Action amountProduct={amount} />
+                <ListProduct.Action 
+                    onEventDeleteProduct={onEventDeleteProduct} 
+                    amountValueProduct={amountProductList}
+                    getAmountProduct={amount}
+                />
+
             </ListProduct.Content>
     )
 }

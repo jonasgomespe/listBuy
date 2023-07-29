@@ -1,14 +1,12 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { View, Text, StatusBar } from 'react-native';
 import { Header } from "../../components/Header";
 import { Input } from "../../components/Inputs";
 import { MenuPrimary } from "../../components/Menu/MenuPrimary";
 import { ListProduct } from "../../components/ListProduct/"; 
-import { ListProductAction } from "../../components/ListProduct/ListProductAction";
 import { Result } from "../../components/Result";
 import { Flex } from "../../components/Flex";
 import { Box } from "../../components/Box";
-import { TextInputMask } from 'react-native-masked-text';
 import { AddItem } from "../../components/AddItem";
 import { style } from './style/style';
 import { FormListBuy } from "../../components/Form/FormListBuy";
@@ -19,25 +17,15 @@ import { RegistProduct } from "../../components/RegistProduct";
 
 export const Home = () => {
 
-    const [price, setPrice] = useState<number | undefined>(0);
     const { 
         showModalProductList, 
         setShowModalProductList,
         addProduct
     } = useContext(AddProductListContext);
 
-    function onPriceProduct(value:any){
-        const valueInput = value || 0;
-        setPrice(valueInput);
-    }
-
     function addProductCart() {
         setShowModalProductList(!showModalProductList);
     }
-
-    useEffect(() => {
-        console.log(addProduct);
-    },[addProduct])
 
     return (
         <View>
@@ -53,8 +41,11 @@ export const Home = () => {
                         addProduct.map(response => {
                             return (
                                 <RegistProduct 
+                                    key={response.id}
+                                    id={response.id}
                                     title={response.name} 
                                     amount={response.amount}
+                                    price={response.princeProduct ? response.princeProduct : '0'}
                                 />
                             )
                         })

@@ -1,40 +1,45 @@
 import React, { useState, useEffect } from "react";
-import { TextInput, Text, View, Pressable, StyleSheet } from "react-native";
+import { TextInput, Text, View, Pressable } from "react-native";
+import { style } from './style/';
 
 interface ListProductActionProps{
-    onInputChange?: () => void
-    amountProduct?:string,
+    getAmountProduct?:string,
     onEventDeleteProduct?: () => void
+    amountValueProduct?:(value:string) => void
 }
 
-export const ListProductAction = ({onInputChange, onEventDeleteProduct, amountProduct}:ListProductActionProps) => {
+export const ListProductAction = ({amountValueProduct, onEventDeleteProduct, getAmountProduct}:ListProductActionProps) => {
 
     const [amount, setAmount] = useState(0);
 
     useEffect(() => {
-        if(amountProduct){
-            setAmount(Number(amountProduct));
+        if(getAmountProduct){
+            setAmount(Number(getAmountProduct));
         }
-    },[amountProduct])
+    },[getAmountProduct])
+
+    useEffect(() => {
+        if(amount < 0){
+            if(onEventDeleteProduct) onEventDeleteProduct();
+        }
+    },[amount])
 
     function onClickPlus(){
-        if(amount <= 9999) setAmount(amount+1);
+        if(amount <= 9999){
+            setAmount(amount+1);
+            if(amountValueProduct) amountValueProduct(String(amount+1));
+        } 
     }  
     
     function onClickLess(){
-        if(amount > 0){
-            setAmount(amount-1);
-        }else{
-            if(onEventDeleteProduct){
-                setAmount(0);
-                onEventDeleteProduct();
-            }
-        }
+        setAmount(amount-1);
+        if(amountValueProduct) amountValueProduct(String(amount-1));
     }  
 
-    function onInputChanges(valor:string){
-        if(Number(valor) > 0 && Number(valor) <= 10000) setAmount(Number(valor));
-        if(valor == '') setAmount(0);
+    function onInputChanges(value:string){
+        if(Number(value) > 0 && Number(value) <= 10000) setAmount(Number(value));
+
+        if(value == '') setAmount(0);
     }   
 
     return (
@@ -63,39 +68,3 @@ export const ListProductAction = ({onInputChange, onEventDeleteProduct, amountPr
         </View>
     )
 }
-
-const style = StyleSheet.create({
-    containerProduct:{
-        flexDirection:'row', 
-        justifyContent:'center', 
-        alignItems:'center'
-    },
-    styleButtonPlus:{
-        backgroundColor:'#AEFF03',
-        width:40,
-        height:40,
-        borderRadius:50,
-        margin:10
-    },
-    styleButtonLess:{
-        backgroundColor:'#FF8B03',
-        width:40,
-        height:40,
-        borderRadius:50,
-        margin:10
-    },
-    titleButton:{
-        fontSize:35,
-        color:'#fff',
-        textAlign:'center',
-        lineHeight:40,
-    },
-    registerProduct:{
-        textAlign:'center', 
-        fontSize:20, 
-        fontWeight:'bold', 
-        color:'#A8A8A8',
-        width:55,
-        maxWidth:70
-    }
-})

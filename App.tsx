@@ -1,7 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { View } from 'react-native';
 import { Home } from './src/pages/Home';
 import { AddProductProvider } from './src/context/addProductList';
+import { style } from './style';
 
 export default function App() {
   return (
@@ -13,10 +14,3 @@ export default function App() {
     </View>
   );
 }
-
-const style = StyleSheet.create({
-  container:{
-    flex:1,
-    backgroundColor:'#F3F3F3'
-  }
-})
