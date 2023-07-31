@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { View, Text, StatusBar } from 'react-native';
 import { Header } from "../../components/Header";
 import { Input } from "../../components/Inputs";
@@ -17,11 +17,34 @@ import { RegistProduct } from "../../components/RegistProduct";
 
 export const Home = () => {
 
+    const [sumPrice, setSumPrice] = useState(0.0); 
+
     const { 
         showModalProductList, 
         setShowModalProductList,
         addProduct
     } = useContext(AddProductListContext);
+
+    useEffect(() => {
+        if(addProduct){
+            let sumPrinceProduct = 0.0;
+
+            for(let i = 0; i < addProduct.length; i++){                
+                if(addProduct[i]){
+                    let removeLetter = addProduct[i].princeProduct;
+                    removeLetter = addProduct[i].princeProduct?.replace(/R\$/g, '');
+                    if(removeLetter) {
+                        removeLetter = removeLetter.replace(',', '.');
+                        sumPrinceProduct += (Number(removeLetter) * Number(addProduct[i].amount));
+                    }
+                }
+            }
+
+            setSumPrice(sumPrinceProduct);
+        }
+
+    },[addProduct])
+
 
     function addProductCart() {
         setShowModalProductList(!showModalProductList);
@@ -68,6 +91,8 @@ export const Home = () => {
             <Flex CSSstyle={{width:'100%', marginTop:-10, justifyContent:'center', alignItems:'center'}}>
                 <Box CSSstyle={{padding:10}}>
                     <Result 
+                        titleResult="Valor disponivel"
+                        amountPayable="R$ 1.000,00"
                         CSSstyle={style.resultStyle} 
                         titleSize={15} 
                         fontSizeResult={20} 
@@ -75,7 +100,9 @@ export const Home = () => {
                     />
                 </Box>
                 <Box CSSstyle={{padding:10}}>
-                    <Result 
+                    <Result
+                        titleResult="Valor total"
+                        amountPayable={String(sumPrice)}   
                         CSSstyle={style.resultStyle} 
                         titleSize={15} 
                         fontSizeResult={20} 

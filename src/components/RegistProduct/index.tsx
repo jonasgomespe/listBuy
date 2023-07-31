@@ -14,7 +14,7 @@ interface RegistProductProps {
 export const RegistProduct = ({id , price, title = '', amount}:RegistProductProps) => {
 
     const [priceProduct, onPriceProduct] = useState('0');
-    const { setDeleteProduct }  = useListProduct();
+    const { setDeleteProduct, addProduct, clearListProduct, setAddProduct }  = useListProduct();
 
     useEffect(() => {
         onPriceProduct(price);
@@ -24,8 +24,19 @@ export const RegistProduct = ({id , price, title = '', amount}:RegistProductProp
         setDeleteProduct(id);
     }
 
+    function updateListProductPrice(valueProduct:string){
+        onPriceProduct(valueProduct);
+    }
+
     function amountProductList(value:string){
-        
+        clearListProduct();
+
+        var product = addProduct.find(response => response.id == id);
+        if(product) {
+            product.amount = value;
+            setAddProduct([...addProduct]);
+        }
+
     }
 
     return (
@@ -44,11 +55,11 @@ export const RegistProduct = ({id , price, title = '', amount}:RegistProductProp
                                     precision: 2,
                                     separator: ',',
                                     delimiter: '.',
-                                    unit: 'R$',
+                                    unit: 'R$ ',
                                     suffixUnit: '',
                                 }}
                                 value={priceProduct}
-                                onChangeText={onPriceProduct}
+                                onChangeText={updateListProductPrice}
                                 style={{fontSize:23, fontWeight:'bold', maxWidth:120, width:120}}
                             />
                         </View>

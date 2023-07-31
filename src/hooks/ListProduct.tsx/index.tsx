@@ -11,7 +11,11 @@ const useListProduct = () => {
         setAddProduct([...filterValue]);
     }
 
-    return {addProduct, setAddProduct, setDeleteProduct};
+    function clearListProduct(){
+        clearData();
+    }
+
+    return {addProduct, setAddProduct, setDeleteProduct, clearListProduct};
 }
 
 export default useListProduct;
